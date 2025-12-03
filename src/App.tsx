@@ -6,8 +6,14 @@ import { MeasurementProfile } from './components/MeasurementProfile';
 import { OrderFlow } from './components/OrderFlow';
 import { OrderTracking } from './components/OrderTracking';
 import { CustomerDashboard } from './components/CustomerDashboard';
+import { RoleSelection } from './components/RoleSelection';
+import { TailorRegistration } from './components/TailorRegistration';
+import { TailorDashboard } from './components/TailorDashboard';
+import { TailorOrderManagement } from './components/TailorOrderManagement';
+import { TailorProfileSettings } from './components/TailorProfileSettings';
+import { BottomNav } from './components/BottomNav';
 
-export type View = 'home' | 'browse' | 'tailor-profile' | 'measurements' | 'order' | 'tracking' | 'dashboard';
+export type View = 'home' | 'browse' | 'tailor-profile' | 'measurements' | 'order' | 'tracking' | 'dashboard' | 'role-selection' | 'tailor-registration' | 'tailor-dashboard' | 'tailor-orders' | 'tailor-settings';
 
 export interface Tailor {
   id: string;
@@ -54,7 +60,7 @@ export interface MeasurementsByCategory {
 }
 
 function App() {
-  const [currentView, setCurrentView] = useState<View>('home');
+  const [currentView, setCurrentView] = useState<View>('role-selection');
   const [selectedTailorId, setSelectedTailorId] = useState<string | null>(null);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [measurements, setMeasurements] = useState<MeasurementsByCategory>({});
@@ -75,6 +81,13 @@ function App() {
       order.id === orderId ? { ...order, status } : order
     ));
   };
+
+  // Determine user role based on current view
+  const userRole: 'customer' | 'tailor' = 
+    currentView.startsWith('tailor-') ? 'tailor' : 'customer';
+  
+  // Views that should not show bottom nav
+  const hideBottomNav = currentView === 'role-selection' || currentView === 'tailor-registration';
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -125,6 +138,45 @@ function App() {
         <CustomerDashboard 
           orders={orders}
           navigateTo={navigateTo}
+        />
+      )}
+      
+      {currentView === 'role-selection' && (
+        <RoleSelection 
+          navigateTo={navigateTo}
+        />
+      )}
+      
+      {currentView === 'tailor-registration' && (
+        <TailorRegistration 
+          navigateTo={navigateTo}
+        />
+      )}
+      
+      {currentView === 'tailor-dashboard' && (
+        <TailorDashboard 
+          navigateTo={navigateTo}
+        />
+      )}
+      
+      {currentView === 'tailor-orders' && (
+        <TailorOrderManagement 
+          navigateTo={navigateTo}
+        />
+      )}
+      
+      {currentView === 'tailor-settings' && (
+        <TailorProfileSettings 
+          navigateTo={navigateTo}
+        />
+      )}
+      
+      {!hideBottomNav && (
+        <BottomNav 
+          navigateTo={navigateTo} 
+          currentView={currentView} 
+          activeOrders={orders.filter(o => o.status !== 'delivered').length}
+          role={userRole}
         />
       )}
     </div>

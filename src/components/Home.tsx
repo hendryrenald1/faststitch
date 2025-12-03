@@ -1,4 +1,4 @@
-import { Search, Ruler, Package, User } from 'lucide-react';
+import { Search, Ruler, Package, User, Scissors } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import type { View } from '../App';
 
@@ -9,33 +9,32 @@ interface HomeProps {
 
 export function Home({ navigateTo, activeOrders }: HomeProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 pb-20">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            {/* Logo */}
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L3 7V10C3 15.55 6.84 20.74 12 22C17.16 20.74 21 15.55 21 10V7L12 2Z" fill="white" fillOpacity="0.3"/>
-                <path d="M9 12L11 14L15 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <circle cx="12" cy="12" r="1.5" fill="white"/>
-              </svg>
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <div className="px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {/* Logo */}
+              <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L3 7V10C3 15.55 6.84 20.74 12 22C17.16 20.74 21 15.55 21 10V7L12 2Z" fill="white" fillOpacity="0.3"/>
+                  <path d="M9 12L11 14L15 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="12" cy="12" r="1.5" fill="white"/>
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-indigo-600">FastStitch</h1>
+                <p className="text-xs text-gray-600">Find your perfect tailor</p>
+              </div>
             </div>
-            <h1 className="text-indigo-600">TailorMatch</h1>
+            <button 
+              onClick={() => navigateTo('role-selection')}
+              className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+            >
+              <User className="w-5 h-5 text-gray-600" />
+            </button>
           </div>
-          <button 
-            onClick={() => navigateTo('dashboard')}
-            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-          >
-            <User className="w-4 h-4" />
-            My Orders
-            {activeOrders > 0 && (
-              <span className="bg-white text-indigo-600 px-2 py-0.5 rounded-full text-sm">
-                {activeOrders}
-              </span>
-            )}
-          </button>
         </div>
       </header>
 
@@ -121,26 +120,66 @@ export function Home({ navigateTo, activeOrders }: HomeProps) {
         </div>
 
         {/* Features */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-          <h3 className="text-gray-900 mb-6">Why TailorMatch?</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <div className="text-indigo-600 mb-2">⚡ Speed</div>
-              <p className="text-gray-600">
+        <div className="text-center mb-8">
+          <h3 className="text-gray-900 mb-2">Why FastStitch?</h3>
+          <p className="text-gray-600 text-sm">The perfect blend of speed, precision, and convenience</p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            <div className="relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all">
+              <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-white text-3xl">⚡</span>
+              </div>
+              <div className="text-gray-900 mb-3">Lightning Fast</div>
+              <p className="text-gray-600 text-sm leading-relaxed">
                 Compare turnaround times and choose the fastest available tailor for your needs
               </p>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-2 text-indigo-600 text-sm">
+                  <div className="w-2 h-2 bg-indigo-600 rounded-full"></div>
+                  <span>Get results in days, not weeks</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="text-indigo-600 mb-2">📏 Perfect Fit</div>
-              <p className="text-gray-600">
+          </div>
+
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            <div className="relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-white text-3xl">📏</span>
+              </div>
+              <div className="text-gray-900 mb-3">Perfect Fit</div>
+              <p className="text-gray-600 text-sm leading-relaxed">
                 Store your measurements once and share them securely with any tailor
               </p>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-2 text-purple-600 text-sm">
+                  <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+                  <span>Save time on every order</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="text-indigo-600 mb-2">🚚 Convenience</div>
-              <p className="text-gray-600">
+          </div>
+
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            <div className="relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all">
+              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-white text-3xl">🚚</span>
+              </div>
+              <div className="text-gray-900 mb-3">Full Convenience</div>
+              <p className="text-gray-600 text-sm leading-relaxed">
                 Schedule pickup and delivery, track your order status in real-time
               </p>
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-2 text-emerald-600 text-sm">
+                  <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
+                  <span>Tailoring from your doorstep</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
